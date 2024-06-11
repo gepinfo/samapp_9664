@@ -42,6 +42,7 @@ jobs:
           aws ecr create-repository --repository-name geppetto-generatedcode-samapp-9664-gcam --tags Key=project_name,Value=${{ env.PROJECT_NAME }} Key=name,Value=${{ env.PROJECT_NAME }} --region us-east-1
           aws ecr create-repository --repository-name geppetto-generatedcode-samapp-9664-gepfilemanager --tags Key=project_name,Value=${{ env.PROJECT_NAME }} Key=name,Value=${{ env.PROJECT_NAME }} --region us-east-1
           aws ecr create-repository --repository-name geppetto-generatedcode-samapp-9664-fluentd --tags Key=project_name,Value=${{ env.PROJECT_NAME }} Key=name,Value=${{ env.PROJECT_NAME }} --region us-east-1
+          aws ecr create-repository --repository-name geppetto-generatedcode-samapp-9664-systementry --tags Key=project_name,Value=${{ env.PROJECT_NAME }} Key=name,Value=${{ env.PROJECT_NAME }} --region us-east-1
           aws ecr create-repository --repository-name geppetto-generatedcode-samapp-9664-crudapp --tags Key=project_name,Value=${{ env.PROJECT_NAME }} Key=name,Value=${{ env.PROJECT_NAME }} --region us-east-1
   Build_and_upload_docker_images_to_ECR:
     needs: Prerequisites
@@ -99,6 +100,10 @@ jobs:
           docker push $ECR_REGISTRY/geppetto-generatedcode-samapp-9664-apigateway:$IMAGE_TAG
           echo "Successfully build the docker image for apigateway and pushed to aws ecr"
 
+          cd ../systementry
+          docker build -t $ECR_REGISTRY/geppetto-generatedcode-samapp-9664-systementry:$IMAGE_TAG .
+          docker push $ECR_REGISTRY/geppetto-generatedcode-samapp-9664-systementry:$IMAGE_TAG
+          echo "Successfully build the docker image for systementry and pushed to aws ecr"
           cd ../crudapp
           docker build -t $ECR_REGISTRY/geppetto-generatedcode-samapp-9664-crudapp:$IMAGE_TAG .
           docker push $ECR_REGISTRY/geppetto-generatedcode-samapp-9664-crudapp:$IMAGE_TAG
@@ -127,6 +132,7 @@ jobs:
         working-directory: .github/workflows
         run: |
           AWS_ACCOUNT_ID="${{ env.AWS_ACCOUNT_ID }}" AWS_ROLE_FOR_FARGATE="${{ env.AWS_ROLE_FOR_FARGATE }}" EFS_ID="${{ steps.EfsID.outputs.FILESYSTEM_ID }}" node task-definition.ts >> task-definition.json
+          AWS_ACCOUNT_ID0="${{ env.AWS_ACCOUNT_ID }}" AWS_ROLE_FOR_FARGATE="${{ env.AWS_ROLE_FOR_FARGATE }}" EFS_ID="${{ steps.EfsID.outputs.FILESYSTEM_ID }}" node task-definition_0.ts >> task-definition_0.json
       #------------- AWS Credentials Configuration ----------------#
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -141,6 +147,7 @@ jobs:
         run: |
 
           echo "::set-output name=SD_ARN::$(aws servicediscovery create-service --name samapp --namespace-id ${{ env.SERVICE_DISCOVERY_NAMESPACE }}   --dns-config "NamespaceId=${{ env.SERVICE_DISCOVERY_NAMESPACE }} ,RoutingPolicy=MULTIVALUE,DnsRecords=[{Type=A,TTL=60}]" --description "Service discovery for ${{ env.PROJECT_NAME }} project" --tags Key=project_name,Value=${{ env.PROJECT_NAME }} Key=name,Value=${{ env.PROJECT_NAME }} | jq -r '.Service.Arn')"
+          echo "::set-output name=SD_ARN0::$(aws servicediscovery create-service --name samapp0 --namespace-id ${{ env.SERVICE_DISCOVERY_NAMESPACE }}   --dns-config "NamespaceId=${{ env.SERVICE_DISCOVERY_NAMESPACE }} ,RoutingPolicy=MULTIVALUE,DnsRecords=[{Type=A,TTL=60}]" --description "Service discovery for ${{ env.PROJECT_NAME }} project" --tags Key=project_name,Value=${{ env.PROJECT_NAME }} Key=name,Value=${{ env.PROJECT_NAME }} | jq -r '.Service.Arn')"
       #------------- Amazon ECS task definition each file ----------------#
       - name: Fill in the new image ID in the Amazon ECS task definition
         id: task-def
@@ -157,12 +164,26 @@ jobs:
           wait-for-service-stability: true
 
       #------------- Amazon ECS task definition split ten microservices ----------------#
+      - name: Fill in the new image ID in the Amazon ECS task definition
+        id: task-def0
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: .github/workflows/task-definition_0.json
+          container-name: crudapp-9664
+          image: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/geppetto-generatedcode-samapp-9664-crudapp:latest
+      - name: Deploy Amazon ECS task definition
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: ${{ steps.task-def0.outputs.task-definition }}
+          cluster: ${{  env.AWS_ECS_CLUSTER_NAME  }}
+          wait-for-service-stability: true
       
       #------------- Amazon ECS task definition connect servicediscovery ----------------#
       - name: Deploying ECS task definition with Service
         run: |
           aws ecs create-service --cluster ${{  env.AWS_ECS_CLUSTER_NAME  }} --service-name samapp --task-definition samapp --desired-count 1 --launch-type FARGATE --platform-version LATEST --network-configuration "awsvpcConfiguration={subnets=[${{ env.AWS_VPC_SUBNET }}],securityGroups=[${{ env.AWS_VPC_SECURITY_GROUP }}],assignPublicIp=ENABLED}" --service-registries '{"registryArn":"${{ steps.SD_ARN.outputs.SD_ARN }}"}' --tags key=project_name,value=${{ env.PROJECT_NAME }}
           sleep 60s
+          aws ecs create-service --cluster ${{  env.AWS_ECS_CLUSTER_NAME  }} --service-name samapp0 --task-definition samapp0 --desired-count 1 --launch-type FARGATE --platform-version LATEST --network-configuration "awsvpcConfiguration={subnets=[${{ env.AWS_VPC_SUBNET }}],securityGroups=[${{ env.AWS_VPC_SECURITY_GROUP }}],assignPublicIp=ENABLED}" --service-registries '{"registryArn":"${{ steps.SD_ARN.outputs.SD_ARN0 }}"}' --tags key=project_name,value=${{ env.PROJECT_NAME }}
           sleep 20s
 
       - name: Get ECS Task IP Address

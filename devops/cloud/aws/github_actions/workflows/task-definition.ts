@@ -70,7 +70,8 @@ module.exports = {
             ],
             "environmentFiles": null,
             "environment": [{"name":"MONGO_DB_URL","value":"mongodb://admin:password@127.0.0.1:27017/samapp_9664?authSource=admin"},{"name":"MONGO_DOMAIN","value":"127.0.0.1"},{"name":"SECURITYURL","value":"http://127.0.0.1:8003"},{"name":"AUTHPROXYURL","value":"http://127.0.0.1:8001"},{"name":"ADMINURL","value":"http://127.0.0.1:8004"},{"name":"GCAMURL","value":"http://127.0.0.1:8007"},{"name":"APIGATEWAY","value":"http://127.0.0.1:8000"},{"name":"SYSTEMCREDENTIALMANAGERURL","value":"http://127.0.0.1:8005"}
-            ,{"name":"CRUDAPPURL","value":"http://samapp.local:8135"}
+            ,{"name":"SYSTEMENTRYURL","value":"http://127.0.0.1:8137"}
+            ,{"name":"CRUDAPPURL","value":"http://samapp0.local:8137"}
             ],
             "secrets": null,
             "mountPoints": [
@@ -292,6 +293,7 @@ module.exports = {
             ],
             "environmentFiles": null,
             "environment": [{"name":"MONGO_DB_URL","value":"mongodb://admin:password@127.0.0.1:27017/samapp_9664?authSource=admin"},{"name":"MONGO_DOMAIN","value":"127.0.0.1"},{"name":"SECURITYURL","value":"http://127.0.0.1:8003"},{"name":"AUTHPROXYURL","value":"http://127.0.0.1:8001"},{"name":"ADMINURL","value":"http://127.0.0.1:8004"},{"name":"GCAMURL","value":"http://127.0.0.1:8007"},{"name":"APIGATEWAY","value":"http://127.0.0.1:8000"}
+            ,{"name":"SYSTEMENTRYURL","value":"http://127.0.0.1:8137"}
             ],
             "mountPoints": [
                 {
@@ -365,16 +367,16 @@ module.exports = {
             }
         },
         {
-            "name": "crudapp-9664",
-            "image": `${process.env.AWS_ACCOUNT_ID}.dkr.ecr.us-east-1.amazonaws.com/geppetto-generatedcode-samapp-9664-crudapp:latest`,
+            "name": "systementry-9664",
+            "image": `${process.env.AWS_ACCOUNT_ID}.dkr.ecr.us-east-1.amazonaws.com/geppetto-generatedcode-samapp-9664-systementry:latest`,
             "memoryReservation": "300",
             "resourceRequirements": null,
             "essential": true,
             "portMappings": [
                 {
-                    "containerPort": "8135",
+                    "containerPort": "8137",
                     "protocol": "tcp",
-                    "hostPort": "8135"
+                    "hostPort": "8137"
                 }
             ],
             "environmentFiles": null,
