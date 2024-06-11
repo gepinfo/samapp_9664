@@ -20,10 +20,6 @@ spec:
   - name: {{ .Values.service.admin.name }}
     port: {{ .Values.service.admin.port }}
     targetPort: {{ .Values.service.admin.targetPort }}
-  - name: {{ .Values.service.systementry.name }}
-    port: {{ .Values.service.systementry.port }}
-    targetPort: {{ .Values.service.systementry.targetPort }}
-
   - name: {{ .Values.service.crudapp.name }}
     port: {{ .Values.service.crudapp.port }}
     targetPort: {{ .Values.service.crudapp.targetPort }}

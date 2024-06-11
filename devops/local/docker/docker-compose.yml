@@ -169,7 +169,6 @@ services:
       - authproxy
       - securitymanager
       - systemcredentialmanager
-      - systementry
       - crudapp
 
     networks:
@@ -246,33 +245,12 @@ services:
       - samapp_9664_net
 
 
-  systementry: 
-    build: ../../../application/services/custom_services/systementry
-    image: systementry-9664
-    container_name: systementry-9664
-    ports: 
-      - 8137:8137
-    env_file: .env
-    depends_on:
-      - mongo
-    networks:
-      - samapp_9664_net
-    logging:
-      driver: "fluentd"
-      options:
-        fluentd-address: 0.0.0.0:24224
-        fluentd-async-connect: "true"
-        tag: fluent
-    mem_limit: 300m
-    mem_reservation: 150m
-    cpus: 0.2
-
   crudapp: 
     build: ../../../application/services/custom_services/crudapp
     image: crudapp-9664
     container_name: crudapp-9664
     ports: 
-      - 8137:8137
+      - 8139:8139
     env_file: .env
     depends_on:
       - mongo

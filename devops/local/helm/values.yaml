@@ -51,17 +51,11 @@ service:
     type: NodePort
     port: 8080
     targetPort: 8080
-  systementry: 
-    name: systementry
-    type: NodePort
-    port: 8137
-    targetPort: 8137
-
   crudapp: 
     name: crudapp
     type: NodePort
-    port: 8137
-    targetPort: 8137
+    port: 8139
+    targetPort: 8139
 
 
 deployment:
@@ -88,10 +82,6 @@ deployment:
   desktop:
      name: desktop
      image: geppettotest/samapp-desktop:1.0
-  systementry: 
-    name: systementry
-    image: geppettotest/samapp-systementry:1.0
-
   crudapp: 
     name: crudapp
     image: geppettotest/samapp-crudapp:1.0
