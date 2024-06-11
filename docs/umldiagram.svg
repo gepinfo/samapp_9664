@@ -1,0 +1,54 @@
+<svg version="1.1" baseProfile="full" width="334.0" height="321.0" viewbox="0 0 334 321" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events">
+<desc >#.interface: fill=lightblue
+#.enumeration: fill=lightgreen
+#.type: fill=lightgray
+[&lt;interface&gt;student|+created_date: { type: Date; };+created_by: { type: String; };+last_modified_by: { type: String; };+last_modified_date: { type: Date; };+name: { type: String; };+age: { type: Number; };+Enter_Name: { type: String; }|]</desc>
+<g stroke-width="1.0" text-align="left" font="12pt Helvetica, Arial, sans-serif" font-size="12pt" font-family="Helvetica" font-weight="normal" font-style="normal">
+<g font-family="Helvetica" font-size="12pt" font-weight="bold" font-style="normal" stroke-width="3.0" stroke-linejoin="round" stroke-linecap="round" stroke="#33322E">
+<g stroke="transparent" fill="transparent">
+<rect x="0.0" y="0.0" height="321.0" width="334.0" stroke="none"></rect>
+</g>
+<g transform="translate(8, 8)" fill="#33322E">
+<g transform="translate(20, 20)">
+<g data-name="student">
+<g fill="lightblue" stroke="#33322E" data-name="student">
+<rect x="0.0" y="0.0" height="265.0" width="278.0" data-name="student"></rect>
+<path d="M0.0 31.0 L278.0 31.0" fill="none" data-name="student"></path>
+<path d="M0.0 257.0 L278.0 257.0" fill="none" data-name="student"></path>
+</g>
+<g transform="translate(0, 0)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="student">
+<g transform="translate(8, 8)" fill="#33322E" text-align="center" data-name="student">
+<a id="../application/services/diagrams/serviceModels/student.ts.student" xlink:href="../application/services/diagrams/serviceModels/student.ts"><text x="131.0" y="13.5" stroke="none" text-anchor="middle" data-name="student">student</text></a>
+
+</g>
+</g>
+<g transform="translate(0, 31)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="student">
+<g transform="translate(8, 8)" fill="#33322E" text-align="left" data-name="student">
+<text x="0.0" y="13.5" stroke="none" data-name="student">+created_date: { type: Date</text>
+<text x="0.0" y="28.5" stroke="none" data-name="student">}</text>
+<text x="0.0" y="43.5" stroke="none" data-name="student">+created_by: { type: String</text>
+<text x="0.0" y="58.5" stroke="none" data-name="student">}</text>
+<text x="0.0" y="73.5" stroke="none" data-name="student">+last_modified_by: { type: String</text>
+<text x="0.0" y="88.5" stroke="none" data-name="student">}</text>
+<text x="0.0" y="103.5" stroke="none" data-name="student">+last_modified_date: { type: Date</text>
+<text x="0.0" y="118.5" stroke="none" data-name="student">}</text>
+<text x="0.0" y="133.5" stroke="none" data-name="student">+name: { type: String</text>
+<text x="0.0" y="148.5" stroke="none" data-name="student">}</text>
+<text x="0.0" y="163.5" stroke="none" data-name="student">+age: { type: Number</text>
+<text x="0.0" y="178.5" stroke="none" data-name="student">}</text>
+<text x="0.0" y="193.5" stroke="none" data-name="student">+Enter_Name: { type: String</text>
+<text x="0.0" y="208.5" stroke="none" data-name="student">}</text>
+
+</g>
+</g>
+<g transform="translate(0, 257)" font-family="Helvetica" font-size="12pt" font-weight="normal" font-style="normal" data-name="student">
+<g transform="translate(8, 8)" fill="#33322E" data-name="student">
+
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</svg>

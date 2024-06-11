@@ -1,0 +1,7 @@
+{
+  "name": "samapp",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular"
+}
